@@ -27,7 +27,7 @@ const ResturantPage = () => {
         <>
             <Box p={4}
                 w={'full'}
-                h={'auto'}
+                minH={'94vh'}
                 backgroundImage={
                     'url(https://images.unsplash.com/photo-1484659619207-9165d119dafe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80)'
                 }
@@ -44,15 +44,21 @@ const ResturantPage = () => {
                     <Filter />
                     <Grid templateColumns=" repeat(auto-fit, minmax(300px, 1fr))" gap={10}>
                         {loading ? (<Loader />) : error ? (<Error error='Something Went Wrong' />) : (
-                            food?.map((foods) => (
+                            food.length > 0 ? (
+                                food?.map((foods) => (
+                                    <>
+                                        <GridItem key={food.id} align={'top'} colSpan={1} >
+                                            <VStack align={'start'}>
+                                                <Card restaurant={foods} alignItem={'stretch'} />
+                                            </VStack>
+                                        </GridItem>
+                                    </>
+                                ))
+                            ) : (
                                 <>
-                                    <GridItem key={food.id} align={'top'} colSpan={1} >
-                                        <VStack align={'start'}>
-                                            <Card restaurant={foods} alignItem={'stretch'} />
-                                        </VStack>
-                                    </GridItem>
+                                    <Text fontSize={'3xl'} color={'white'} h={'full'} textAlign={'center'} mt={'8'}>There is no resturant with this name</Text>
                                 </>
-                            ))
+                            )
                         )}
                     </Grid>
                 </Container>
